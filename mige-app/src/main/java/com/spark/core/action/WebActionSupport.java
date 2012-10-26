@@ -19,7 +19,7 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author hgu
  * 
  */
-public abstract class AbstractActionSupport extends ActionSupport implements SessionAware, ServletRequestAware, ServletResponseAware {
+public abstract class WebActionSupport extends ActionSupport implements SessionAware, ServletRequestAware, ServletResponseAware {
 	private static final long		serialVersionUID	= 1L;
 
 	protected ServletContext		servletContext;
@@ -28,7 +28,7 @@ public abstract class AbstractActionSupport extends ActionSupport implements Ses
 	protected HttpServletResponse	response;
 	protected ApplicationContext	applicationContext;
 	
-	public AbstractActionSupport() {
+	public WebActionSupport() {
 		super();
 		servletContext = ServletActionContext.getServletContext();
 		applicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
