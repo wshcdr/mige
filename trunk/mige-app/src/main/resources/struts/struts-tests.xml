@@ -4,27 +4,7 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
-	<package name="default" namespace="/" extends="struts-default">
-		<default-action-ref name="index" />
-		<global-results>
-			<result name="error">/error.jsp</result>
-		</global-results>
+	<package name="test" namespace="/" extends="default">
 
-		<global-exception-mappings>
-			<exception-mapping exception="java.lang.Exception"
-				result="error" />
-		</global-exception-mappings>
-
-		<action name="loadUser" class="com.ghh.core.action.UserLoadAction">
-			<result type="dispatcher" name="success">
-				<param name="location">/index.jsp</param>
-			</result>
-		</action>
-		
-		<action name="createUser" class="com.ghh.core.action.CreateUserAction">
-			<result type="dispatcher" name="success">
-				<param name="location">/add_user_test.jsp</param>
-			</result>
-		</action>
 	</package>
 </struts>
