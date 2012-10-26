@@ -3,9 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="genericDao" class="com.ghh.core.dao.impl.GenericDaoImpl"/>
+	<bean id="genericDao" class="com.spark.core.dao.GenericDao"/>
 	
-	<bean id="genericService" class="com.ghh.core.service.impl.GenericServiceImpl">
+	<bean id="genericService" class="com.spark.core.service.GenericServiceImpl">
 		<property name="genericDao" ref="genericDao"/>
 	</bean>
 </beans>

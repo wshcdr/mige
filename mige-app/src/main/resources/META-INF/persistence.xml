@@ -5,7 +5,5 @@
 	<persistence-unit name="default" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		
-		<class>com.ghh.core.domain.User</class>
-		
 	</persistence-unit>
 </persistence>  
