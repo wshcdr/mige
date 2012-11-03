@@ -13,5 +13,5 @@
 	
 	</package>
 	
-	<include file="struts/struts-tests.xml"/>
+	<include file="struts/struts-mige.xml"/>
 </struts>
