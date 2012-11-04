@@ -5,6 +5,8 @@
 
 <struts>
 	<package name="mige-admin" namespace="/admin" extends="default">
-		
+		<action name="user_list" class="com.spark.mige.action.UserAdminAction" method="listUser">
+			<result name="success" type="dispatcher">user_list.jsp</result>
+		</action>
 	</package>
 </struts>
