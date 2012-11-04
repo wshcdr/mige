@@ -7,6 +7,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentFactory;
 import org.dom4j.Element;
 
+import com.opensymphony.xwork2.Preparable;
 import com.spark.core.action.WebActionSupport;
 import com.spark.core.util.AppUtils;
 import com.spark.mige.domain.entity.User;
@@ -14,7 +15,7 @@ import com.spark.mige.domain.model.UserSex;
 import com.spark.mige.service.UserService;
 import com.spark.mige.util.DomUtils;
 
-public class UserRegisterAction extends WebActionSupport {
+public class UserRegisterAction extends WebActionSupport implements Preparable {
 	private static final long		serialVersionUID	= 1L;
 
 	/*
@@ -41,6 +42,11 @@ public class UserRegisterAction extends WebActionSupport {
 	private String					verification;
 	private org.w3c.dom.Document	perfectUserXmlDom;
 
+	@Override
+	public void prepare() throws Exception {
+		setResponseEncoding();		
+	}
+	
 	/**
 	 * regist user
 	 * 
@@ -48,8 +54,6 @@ public class UserRegisterAction extends WebActionSupport {
 	 * @throws Exception
 	 */
 	public String register() throws Exception {
-		setResponseEncoding();
-
 		User user = newUser();
 		getUserService().create(user);
 		registerUserXmlDom = convert2Document(user);
@@ -63,15 +67,13 @@ public class UserRegisterAction extends WebActionSupport {
 	 * @throws Exception
 	 */
 	public String perfectInfo() throws Exception {
-		setResponseEncoding();
-
 		User user = getUserService().getUserById(userId);
 		if (user == null) {
 			perfectUserXmlDom = createFailDocumnet();
 			return SUCCESS;
 		}
 		fillUserInfo(user);
-		user.setIsPerfect(true);
+		user.setIsComplete(true);
 		getUserService().merge(user);
 		perfectUserXmlDom = convert2Document(user);
 		return SUCCESS;
@@ -80,7 +82,7 @@ public class UserRegisterAction extends WebActionSupport {
 	private User newUser() {
 		User user = new User();
 		user.setLoginName(loginName);
-		user.setIsPerfect(false);
+		user.setIsComplete(false);
 		user.setCreateTime(AppUtils.currentTime());
 		return user;
 	}
@@ -105,7 +107,7 @@ public class UserRegisterAction extends WebActionSupport {
 		Document doc = createDocument();
 		Element root = doc.getRootElement();
 		root.addElement("status").addText("success");
-		if (!user.getIsPerfect()) {
+		if (!user.getIsComplete()) {
 			root.addElement("user_id").addText(user.getId().toString());
 		}
 		Element inf = root.addElement("inf");

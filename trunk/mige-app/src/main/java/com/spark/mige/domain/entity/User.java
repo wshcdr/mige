@@ -63,8 +63,8 @@ public class User implements Serializable {
 	@Column(name = "create_time")
 	private Date				createTime;
 
-	@Column(name = "is_perfect")
-	private Boolean				isPerfect;
+	@Column(name = "is_complete")
+	private Boolean				isComplete;
 
 	public Long getId() {
 		return id;
@@ -178,11 +178,11 @@ public class User implements Serializable {
 		this.createTime = createTime;
 	}
 
-	public Boolean getIsPerfect() {
-		return isPerfect;
+	public Boolean getIsComplete() {
+		return isComplete;
 	}
 
-	public void setIsPerfect(Boolean isPerfect) {
-		this.isPerfect = isPerfect;
+	public void setIsComplete(Boolean isComplete) {
+		this.isComplete = isComplete;
 	}
 }

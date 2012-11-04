@@ -24,7 +24,7 @@
 			<column name="transportation" type="varchar(255)"/>
 			<column name="favorite" type="varchar(255)"/>
 			<column name="create_time" type="TIMESTAMP" defaultValueDate="CURRENT_TIMESTAMP"/>
-			<column name="is_perfect" type="java.sql.Types.BOOLEAN" defaultValueBoolean="false"/>
+			<column name="is_complete" type="java.sql.Types.BOOLEAN" defaultValueBoolean="false"/>
 		</createTable>
 	</changeSet>
 

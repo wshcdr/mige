@@ -16,6 +16,7 @@
 			<td align="center">ID</td>
 			<td align="center">登录名</td>
 			<td align="center">姓名</td>
+			<td align="center">性别</td>
 			<td align="center">国家</td>
 			<td align="center">城市</td>
 			<td align="center">邮编</td>
@@ -26,12 +27,14 @@
 			<td align="center">出行方式</td>
 			<td align="center">品牌</td>
 			<td align="center">注册时间</td>
+			<td align="center">是否完整</td>
 		</tr>
 		<s:iterator value="userList" var="user">
 		<tr>
 			<td>${user.id}</td>
 			<td>${user.loginName}</td>
 			<td>${user.name}</td>
+			<td>${user.sex.name}</td>
 			<td>${user.country}</td>
 			<td>${user.city}</td>
 			<td>${user.postCode}</td>
@@ -42,6 +45,7 @@
 			<td>${user.transportation}</td>
 			<td>${user.favorite}</td>
 			<td><s:date name="#user.createTime" format="yyyy-MM-dd HH:mm"/></td>
+			<td>${user.isComplete}</td>
 		</tr>
 		</s:iterator>
 	</table>
