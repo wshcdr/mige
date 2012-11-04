@@ -43,10 +43,13 @@
 	</table>
 </form>
 <br/><br/><br/>
+
 <a href="registry.jsp" target="blank">注册用户</a><br/><br/><br/>
-<input id="userId" type="text">
+
+<input id="userId" type="text" size="2">
 <input type="button" value="完善信息" onclick="completeUserInfo()">
 <span>(在左边的输入框中填写用户ID)</span><br/><br/><br/>
+
 <a href="admin/user_list.do">用户列表</a>
 </body>
 </html>

@@ -4,37 +4,45 @@ import org.dom4j.Document;
 import org.dom4j.DocumentFactory;
 import org.dom4j.Element;
 
+import com.opensymphony.xwork2.Preparable;
 import com.spark.core.action.WebActionSupport;
 import com.spark.mige.domain.entity.User;
 import com.spark.mige.service.UserService;
 import com.spark.mige.util.DomUtils;
 
-public class UserAction extends WebActionSupport {
+public class UserAction extends WebActionSupport implements Preparable {
 	private static final long		serialVersionUID	= 1L;
 
 	private String					loginName;
 	private org.w3c.dom.Document	loginFeedback;
 
+	/**
+	 * login
+	 * @return
+	 * @throws Exception
+	 */
 	public String login() throws Exception {
-		setResponseEncoding();
-		
 		User user = getUserService().getUserByLoginName(loginName);
 		if (user == null) {
 			loginFeedback = createFailDocumnet();
 		} else {
+			session.put("user", user);	//put user to session
 			loginFeedback = generateFeedback(user);
 		}
 		return SUCCESS;
 	}
 
+	@Override
+	public void prepare() throws Exception {
+		setResponseEncoding();		
+	}
+	
 	private org.w3c.dom.Document generateFeedback(User user) throws Exception {
 		Document doc = createDocument();
 		Element root = doc.getRootElement();
 		root.addElement("status").addText("success");
-		if (!user.getIsPerfect()) {
-			root.addElement("user_id").addText(user.getId().toString());
-		}
-		root.addElement("user_inf").addText(user.getIsPerfect().toString());
+		root.addElement("user_id").addText(user.getId().toString());
+		root.addElement("user_inf").addText(user.getIsComplete().toString());
 		Element inf = root.addElement("inf");
 		getUserService().addUserInfo(inf, user);
 
