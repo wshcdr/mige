@@ -30,7 +30,7 @@
 				<property name="databasePlatform" value="org.hibernate.dialect.MySQL5Dialect"/>
 				<property name="database" value="MYSQL" />
 				<property name="showSql" value="${hibernate.showSql}" />
-				<property name="generateDdl" value="true" />
+				<property name="generateDdl" value="false" />
 			</bean>
 		</property>
 	</bean>
