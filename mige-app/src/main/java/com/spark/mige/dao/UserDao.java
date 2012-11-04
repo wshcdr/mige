@@ -21,4 +21,10 @@ public class UserDao extends JpaDaoSupport {
 			return null;
 		}
 	}
+	
+	public List<User> listAll() {
+		String qlString = "select u from User u order by u.id desc";
+		TypedQuery<User> query = getEntityManager().createQuery(qlString, User.class);
+		return query.getResultList();
+	}
 }

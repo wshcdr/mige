@@ -18,4 +18,5 @@
 	</package>
 	
 	<include file="struts/struts-mige.xml"/>
+	<include file="struts/struts-mige-admin.xml"/>
 </struts>

@@ -34,9 +34,10 @@ public class UserRegisterAction extends WebActionSupport {
 	private String					postCode;
 	private String					birthday;
 	private String					telephone;
+	private String					address;
 	private String					mail;
 	private String					transportation;
-	private String					favority;
+	private String					favorite;
 	private String					verification;
 	private org.w3c.dom.Document	perfectUserXmlDom;
 
@@ -48,7 +49,7 @@ public class UserRegisterAction extends WebActionSupport {
 	 */
 	public String register() throws Exception {
 		setResponseEncoding();
-		
+
 		User user = newUser();
 		getUserService().create(user);
 		registerUserXmlDom = convert2Document(user);
@@ -63,7 +64,7 @@ public class UserRegisterAction extends WebActionSupport {
 	 */
 	public String perfectInfo() throws Exception {
 		setResponseEncoding();
-		
+
 		User user = getUserService().getUserById(userId);
 		if (user == null) {
 			perfectUserXmlDom = createFailDocumnet();
@@ -91,12 +92,13 @@ public class UserRegisterAction extends WebActionSupport {
 		user.setCity(city);
 		user.setPostCode(postCode);
 		user.setTelephone(telephone);
+		user.setAddress(address);
 		user.setEmail(mail);
 		if (StringUtils.isNotEmpty(birthday)) {
 			user.setBirthday(AppUtils.parseDate(birthday, "yyyy-MM-dd"));
 		}
 		user.setTransportation(transportation);
-		user.setFavorite(favority);
+		user.setFavorite(favorite);
 	}
 
 	private org.w3c.dom.Document convert2Document(User user) throws Exception {
@@ -132,7 +134,7 @@ public class UserRegisterAction extends WebActionSupport {
 		response.setContentType("text/xml;charset=UTF-8");
 		response.setHeader("Cache-Control", "no-cache");
 	}
-	
+
 	public String getLoginName() {
 		return loginName;
 	}
@@ -193,14 +195,6 @@ public class UserRegisterAction extends WebActionSupport {
 		this.city = city;
 	}
 
-	public String getFavority() {
-		return favority;
-	}
-
-	public void setFavority(String favority) {
-		this.favority = favority;
-	}
-
 	public String getPostCode() {
 		return postCode;
 	}
@@ -215,6 +209,22 @@ public class UserRegisterAction extends WebActionSupport {
 
 	public void setBirthday(String birthday) {
 		this.birthday = birthday;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getFavorite() {
+		return favorite;
+	}
+
+	public void setFavorite(String favorite) {
+		this.favorite = favorite;
 	}
 
 	public String getMail() {

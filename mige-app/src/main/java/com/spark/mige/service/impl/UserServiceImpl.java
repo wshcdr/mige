@@ -1,5 +1,7 @@
 package com.spark.mige.service.impl;
 
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
@@ -47,6 +49,11 @@ public class UserServiceImpl extends GenericServiceImpl implements UserService {
 		addElement(inf, "mail", user.getEmail());
 		addElement(inf, "transportation", user.getTransportation());
 		addElement(inf, "fervourate", user.getFavorite());
+	}
+	
+	@Override
+	public List<User> getAllUser() {
+		return userDao.listAll();
 	}
 	
 	private void addElement(Element e, String name, String val) {

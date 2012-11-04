@@ -45,7 +45,7 @@
 			</tr>
 			<tr>
 				<td>电话:</td>
-				<td><input type="text" name="tel"></td>
+				<td><input type="text" name="telephone"></td>
 			</tr>
 			<tr>
 				<td>生日:</td>
@@ -64,7 +64,7 @@
 			</tr>
 			<tr>
 				<td>品牌:</td>
-				<td><input type="text" name="favority"></td>
+				<td><input type="text" name="favorite"></td>
 			</tr>
 			<tr>
 				<td>验证码:</td>
