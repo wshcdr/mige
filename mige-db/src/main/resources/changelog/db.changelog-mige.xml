@@ -3,5 +3,29 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
+	<changeSet id="1" author="sean.gu">
+		<comment>create table user</comment>
+		<createTable tableName="user">
+			<column name="id" type="int(10)" autoIncrement="true">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="login_name" type="varchar(50)">
+				<constraints nullable="false" unique="true" />
+			</column>
+			<column name="name" type="varchar(50)"/>
+			<column name="sex" type="int(1)"/>
+			<column name="country" type="varchar(50)"/>
+			<column name="city" type="varchar(50)"/>
+			<column name="postcode" type="varchar(20)"/>
+			<column name="address" type="varchar(255)"/>
+			<column name="telephone" type="varchar(50)"/>
+			<column name="birthday" type="java.sql.Types.DATE"/>
+			<column name="email" type="varchar(100)"/>
+			<column name="transportation" type="varchar(255)"/>
+			<column name="favorite" type="varchar(255)"/>
+			<column name="create_time" type="TIMESTAMP" defaultValueDate="CURRENT_TIMESTAMP"/>
+			<column name="is_perfect" type="java.sql.Types.BOOLEAN" defaultValueBoolean="false"/>
+		</createTable>
+	</changeSet>
 
 </databaseChangeLog>

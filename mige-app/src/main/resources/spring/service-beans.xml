@@ -8,4 +8,10 @@
 	<bean id="genericService" class="com.spark.core.service.GenericServiceImpl">
 		<property name="genericDao" ref="genericDao"/>
 	</bean>
+	
+	<bean id="userDao" class="com.spark.mige.dao.UserDao"/>
+	
+	<bean id="userService" class="com.spark.mige.service.impl.UserServiceImpl" parent="genericService">
+		<property name="userDao" ref="userDao"></property>
+	</bean>
 </beans>
