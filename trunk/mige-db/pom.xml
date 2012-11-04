@@ -37,10 +37,10 @@
 
 	<profiles>
 		<profile>
-			<id>deploy-db</id>
+			<id>mige-db-deploy</id>
 			<activation>
 				<property>
-					<name>mige-db</name>
+					<name>deploy-db</name>
 				</property>
 			</activation>
 			<build>

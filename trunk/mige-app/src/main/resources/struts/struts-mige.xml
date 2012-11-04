@@ -5,10 +5,21 @@
 
 <struts>
 	<package name="mige" namespace="/" extends="default">
-		<action name="login" class="com.spark.mige.action.UserLoginAction" method="login">
+		<action name="register_user" class="com.spark.mige.action.UserRegisterAction" method="register">
 			<result name="success" type="xslt">
-				<param name="location">/WEB-INF/template.xsl</param>
-				<param name="exposedValue">userXmlData</param>
+				<param name="exposedValue">registerUserXmlDom</param>
+			</result>
+		</action>
+		
+		<action name="perfect_inf" class="com.spark.mige.action.UserRegisterAction" method="perfectInfo">
+			<result name="success" type="xslt">
+				<param name="exposedValue">perfectUserXmlDom</param>
+			</result>
+		</action>
+		
+		<action name="login" class="com.spark.mige.action.UserAction" method="login">
+			<result name="success" type="xslt">
+				<param name="exposedValue">loginFeedback</param>
 			</result>
 		</action>
 	</package>
