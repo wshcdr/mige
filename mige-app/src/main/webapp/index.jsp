@@ -33,7 +33,7 @@
 	<table>
 		<tr>
 			<td>用户名:</td>
-			<td><input type="text" name="loginName" id="lname"></td>
+			<td><input type="text" name="user" id="lname"></td>
 		</tr>
 		<tr>
 			<td colspan="2" align="center">
