@@ -21,24 +21,24 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 	/*
 	 * register fields
 	 */
-	private String					loginName;
+	private String					account;
 	private org.w3c.dom.Document	registerUserXmlDom;
 
 	/*
 	 * perfect info
 	 */
-	private Long					userId;
+	private Long					user_id;
 	private String					name;
 	private Integer					sex;
-	private String					country;
-	private String					city;
-	private String					postCode;
+	private String					cb1;
+	private String					cb2;
+	private String					pos;
 	private String					birthday;
-	private String					telephone;
+	private String					tel;
 	private String					address;
 	private String					mail;
 	private String					transportation;
-	private String					favorite;
+	private String					fervourate;
 	private String					verification;
 	private org.w3c.dom.Document	perfectUserXmlDom;
 
@@ -67,7 +67,7 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 	 * @throws Exception
 	 */
 	public String perfectInfo() throws Exception {
-		User user = getUserService().getUserById(userId);
+		User user = getUserService().getUserById(user_id);
 		if (user == null) {
 			perfectUserXmlDom = createFailDocumnet();
 			return SUCCESS;
@@ -81,7 +81,7 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 
 	private User newUser() {
 		User user = new User();
-		user.setLoginName(loginName);
+		user.setLoginName(account);
 		user.setIsComplete(false);
 		user.setCreateTime(AppUtils.currentTime());
 		return user;
@@ -90,17 +90,17 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 	private void fillUserInfo(User user) throws ParseException {
 		user.setName(name);
 		user.setSex(UserSex.values()[sex]);
-		user.setCountry(country);
-		user.setCity(city);
-		user.setPostCode(postCode);
-		user.setTelephone(telephone);
+		user.setCountry(cb1);
+		user.setCity(cb2);
+		user.setPostCode(pos);
+		user.setTelephone(tel);
 		user.setAddress(address);
 		user.setEmail(mail);
 		if (StringUtils.isNotEmpty(birthday)) {
 			user.setBirthday(AppUtils.parseDate(birthday, "yyyy-MM-dd"));
 		}
 		user.setTransportation(transportation);
-		user.setFavorite(favorite);
+		user.setFavorite(fervourate);
 	}
 
 	private org.w3c.dom.Document convert2Document(User user) throws Exception {
@@ -137,12 +137,28 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 		response.setHeader("Cache-Control", "no-cache");
 	}
 
-	public String getLoginName() {
-		return loginName;
+	public String getAccount() {
+		return account;
 	}
 
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
+	public org.w3c.dom.Document getRegisterUserXmlDom() {
+		return registerUserXmlDom;
+	}
+
+	public void setRegisterUserXmlDom(org.w3c.dom.Document registerUserXmlDom) {
+		this.registerUserXmlDom = registerUserXmlDom;
+	}
+
+	public Long getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(Long user_id) {
+		this.user_id = user_id;
 	}
 
 	public String getName() {
@@ -153,26 +169,6 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 		this.name = name;
 	}
 
-	public String getTelephone() {
-		return telephone;
-	}
-
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
-	}
-
-	public org.w3c.dom.Document getRegisterUserXmlDom() {
-		return registerUserXmlDom;
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-
 	public Integer getSex() {
 		return sex;
 	}
@@ -181,28 +177,28 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 		this.sex = sex;
 	}
 
-	public String getCountry() {
-		return country;
+	public String getCb1() {
+		return cb1;
 	}
 
-	public void setCountry(String country) {
-		this.country = country;
+	public void setCb1(String cb1) {
+		this.cb1 = cb1;
 	}
 
-	public String getCity() {
-		return city;
+	public String getCb2() {
+		return cb2;
 	}
 
-	public void setCity(String city) {
-		this.city = city;
+	public void setCb2(String cb2) {
+		this.cb2 = cb2;
 	}
 
-	public String getPostCode() {
-		return postCode;
+	public String getPos() {
+		return pos;
 	}
 
-	public void setPostCode(String postCode) {
-		this.postCode = postCode;
+	public void setPos(String pos) {
+		this.pos = pos;
 	}
 
 	public String getBirthday() {
@@ -213,20 +209,20 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 		this.birthday = birthday;
 	}
 
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
 	public String getAddress() {
 		return address;
 	}
 
 	public void setAddress(String address) {
 		this.address = address;
-	}
-
-	public String getFavorite() {
-		return favorite;
-	}
-
-	public void setFavorite(String favorite) {
-		this.favorite = favorite;
 	}
 
 	public String getMail() {
@@ -245,6 +241,14 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 		this.transportation = transportation;
 	}
 
+	public String getFervourate() {
+		return fervourate;
+	}
+
+	public void setFervourate(String fervourate) {
+		this.fervourate = fervourate;
+	}
+
 	public String getVerification() {
 		return verification;
 	}
@@ -255,5 +259,9 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 
 	public org.w3c.dom.Document getPerfectUserXmlDom() {
 		return perfectUserXmlDom;
+	}
+
+	public void setPerfectUserXmlDom(org.w3c.dom.Document perfectUserXmlDom) {
+		this.perfectUserXmlDom = perfectUserXmlDom;
 	}
 }

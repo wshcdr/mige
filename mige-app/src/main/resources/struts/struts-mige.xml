@@ -5,7 +5,7 @@
 
 <struts>
 	<package name="mige" namespace="/" extends="default">
-		<action name="register_user" class="com.spark.mige.action.UserRegisterAction" method="register">
+		<action name="regiter_user" class="com.spark.mige.action.UserRegisterAction" method="register">
 			<result name="success" type="xslt">
 				<param name="exposedValue">registerUserXmlDom</param>
 			</result>
