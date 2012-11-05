@@ -6,7 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>stuttgart8</title>
-<script type="text/javascript" src="../js/jquery-1.8.1.js"></script>
 <link href="css/css.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 	function search() {
