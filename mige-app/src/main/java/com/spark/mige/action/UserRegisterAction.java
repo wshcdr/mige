@@ -29,7 +29,7 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 	 */
 	private Long					user_id;
 	private String					name;
-	private Integer					sex;
+	private String					sex;
 	private String					cb1;
 	private String					cb2;
 	private String					pos;
@@ -89,7 +89,7 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 
 	private void fillUserInfo(User user) throws ParseException {
 		user.setName(name);
-		user.setSex(UserSex.values()[sex]);
+		user.setSex(convertSex(sex));
 		user.setCountry(cb1);
 		user.setCity(cb2);
 		user.setPostCode(pos);
@@ -128,6 +128,16 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 		return doc;
 	}
 
+	private UserSex convertSex(String s) {
+		if (UserSex.male.getName().equals(s)) {
+			return UserSex.male;
+		}
+		if (UserSex.female.getName().equals(s)) {
+			return UserSex.female;
+		}
+		return null;
+	}
+	
 	private UserService getUserService() {
 		return getBean(UserService.class, "userService");
 	}
@@ -169,11 +179,11 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 		this.name = name;
 	}
 
-	public Integer getSex() {
+	public String getSex() {
 		return sex;
 	}
 
-	public void setSex(Integer sex) {
+	public void setSex(String sex) {
 		this.sex = sex;
 	}
 
