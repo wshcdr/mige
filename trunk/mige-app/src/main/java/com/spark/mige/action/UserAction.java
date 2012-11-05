@@ -14,7 +14,7 @@ public class UserAction extends WebActionSupport implements Preparable {
 	private static final long		serialVersionUID	= 1L;
 	private final static String		USER_SESSION_NAME	= "user";
 
-	private String					loginName;
+	private String					user;
 	private org.w3c.dom.Document	loginFeedback;
 
 	/**
@@ -24,12 +24,12 @@ public class UserAction extends WebActionSupport implements Preparable {
 	 * @throws Exception
 	 */
 	public String login() throws Exception {
-		User user = getUserService().getUserByLoginName(loginName);
-		if (user == null) {
+		User u = getUserService().getUserByLoginName(user);
+		if (u == null) {
 			loginFeedback = createFailDocumnet();
 		} else {
 			session.put(USER_SESSION_NAME, user); // put user to session
-			loginFeedback = generateFeedback(user);
+			loginFeedback = generateFeedback(u);
 		}
 		return SUCCESS;
 	}
@@ -40,11 +40,11 @@ public class UserAction extends WebActionSupport implements Preparable {
 	 * @throws Exception
 	 */
 	public String checkLogin() throws Exception {
-		User user = (User) session.get(USER_SESSION_NAME);
-		if (user == null) {
+		User u = (User) session.get(USER_SESSION_NAME);
+		if (u == null) {
 			loginFeedback = createFailDocumnet();
 		} else {
-			loginFeedback = generateFeedback(user);
+			loginFeedback = generateFeedback(u);
 		}
 		return SUCCESS;
 	}
@@ -96,11 +96,11 @@ public class UserAction extends WebActionSupport implements Preparable {
 		this.loginFeedback = loginFeedback;
 	}
 
-	public String getLoginName() {
-		return loginName;
+	public String getUser() {
+		return user;
 	}
 
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
+	public void setUser(String user) {
+		this.user = user;
 	}
 }
