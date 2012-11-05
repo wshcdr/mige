@@ -22,5 +22,11 @@
 				<param name="exposedValue">loginFeedback</param>
 			</result>
 		</action>
+		
+		<action name="check_login" class="com.spark.mige.action.UserAction" method="checkLogin">
+			<result name="success" type="xslt">
+				<param name="exposedValue">loginFeedback</param>
+			</result>
+		</action>
 	</package>
 </struts>

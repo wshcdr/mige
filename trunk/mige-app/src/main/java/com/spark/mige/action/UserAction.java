@@ -12,12 +12,14 @@ import com.spark.mige.util.DomUtils;
 
 public class UserAction extends WebActionSupport implements Preparable {
 	private static final long		serialVersionUID	= 1L;
+	private final static String		USER_SESSION_NAME	= "user";
 
 	private String					loginName;
 	private org.w3c.dom.Document	loginFeedback;
 
 	/**
 	 * login
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
@@ -26,7 +28,22 @@ public class UserAction extends WebActionSupport implements Preparable {
 		if (user == null) {
 			loginFeedback = createFailDocumnet();
 		} else {
-			session.put("user", user);	//put user to session
+			session.put(USER_SESSION_NAME, user); // put user to session
+			loginFeedback = generateFeedback(user);
+		}
+		return SUCCESS;
+	}
+
+	/**
+	 * check if user has logined
+	 * @return
+	 * @throws Exception
+	 */
+	public String checkLogin() throws Exception {
+		User user = (User) session.get(USER_SESSION_NAME);
+		if (user == null) {
+			loginFeedback = createFailDocumnet();
+		} else {
 			loginFeedback = generateFeedback(user);
 		}
 		return SUCCESS;
@@ -34,9 +51,9 @@ public class UserAction extends WebActionSupport implements Preparable {
 
 	@Override
 	public void prepare() throws Exception {
-		setResponseEncoding();		
+		setResponseEncoding();
 	}
-	
+
 	private org.w3c.dom.Document generateFeedback(User user) throws Exception {
 		Document doc = createDocument();
 		Element root = doc.getRootElement();
@@ -70,7 +87,7 @@ public class UserAction extends WebActionSupport implements Preparable {
 		response.setContentType("text/xml;charset=UTF-8");
 		response.setHeader("Cache-Control", "no-cache");
 	}
-	
+
 	public org.w3c.dom.Document getLoginFeedback() {
 		return loginFeedback;
 	}
