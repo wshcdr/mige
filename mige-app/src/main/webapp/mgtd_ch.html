@@ -4,147 +4,170 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>米格广场</title>
 <link href="css/global.css" rel="stylesheet" type="text/css" />
-<script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=719513776" type="text/javascript" charset="utf-8"></script>
-        <script type="text/javascript" src="./js/jquery-1.8.2.min.js"></script>  
-        <script type="text/javascript" src="./js/swfobject.js"></script> 
-        <script type="text/javascript">
-            var flashvars = {};
+<script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=719513776"
+	type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="./js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="./js/swfobject.js"></script>
+<script type="text/javascript">
+	var flashvars = {};
 
-            var params = {};
-            params.menu = "false";
-            params.allowScriptAccess = "always";
-			params.wmode="transparent";
+	var params = {};
+	params.menu = "false";
+	params.allowScriptAccess = "always";
+	params.wmode = "transparent";
 
+	var attributes = {};
+	attributes.id = "main_swf";
+	attributes.name = "main_swf";
 
-            var attributes = {};
-            attributes.id = "main_swf";
-            attributes.name = "main_swf";
+	swfobject.embedSWF("flash/main_5.0_ch.swf", "flashContent", "100%", "710", "10.0.0", "expressInstall.swf", flashvars, params, attributes);
 
-            swfobject.embedSWF("flash/main_5.0_ch.swf", "flashContent", "100%", "710", "10.0.0", "expressInstall.swf", flashvars, params, attributes);
+	function callSinaLogin() {
 
+		if (WB2.checkLogin()) {
+			logout(function() {
+				showLogin();
+			});
+		} else {
+			showLogin();
+		}
 
-        
+		// if (isCommunicatorReady) {
 
-            function callSinaLogin() {
+		//    callSwf("3344", "luhui", "shanghai", "http://tp2.sinaimg.cn/1760286637/50/5628819245/1");
+		//}
+	}
+	function callSwf(user_id, user_name, user_location, profile_image_url) {
+		var _swf = getSWF("main_swf");
+		if (isCommunicatorReady) {
+			_swf.sinaLogin(user_id, user_name, user_location, profile_image_url);
+		}
+	}
 
-            
-                if (WB2.checkLogin()) {
-                    logout(function () {
-                        showLogin();
-                    });
-                } else {
-                    showLogin();
-                }
-				
-				
-               // if (isCommunicatorReady) {
-                    
-                //    callSwf("3344", "luhui", "shanghai", "http://tp2.sinaimg.cn/1760286637/50/5628819245/1");
-                //}
-            }
-            function callSwf(user_id, user_name, user_location, profile_image_url) {
-                var _swf = getSWF("main_swf");
-				if(isCommunicatorReady){
-                   _swf.sinaLogin(user_id, user_name, user_location, profile_image_url);
+	function showLogin() {
+		WB2.login(function() {
+			getUserID();
+		});
+	}
+	function getUserID() {
+		WB2.anyWhere(function(W) {
+			W.parseCMD("/account/get_uid.json", function(sResult, bStatus) {
+				if (!!bStatus) {
+					showInfo(sResult);
 				}
-               
-            }
+			}, {}, {
+				method : 'get'
+			});
+		});
+	}
+	function showInfo(user) {
+		WB2.anyWhere(function(W) {
+			W.parseCMD("/users/show.json", function(sResult, bStatus) {
+				if (!!bStatus) {
+					var user_id = sResult.id;
+					var user_name = sResult.screen_name;
+					var user_location = sResult.location;
+					var profile_image_url = sResult.profile_image_url;
 
-            function showLogin() {
-                WB2.login(function () {
-                    getUserID();
-                });
-            }
-            function getUserID() {
-                WB2.anyWhere(function (W) {
-                    W.parseCMD("/account/get_uid.json", function (sResult, bStatus) {
-                        if (!!bStatus) {
-                            showInfo(sResult);
-                        }
-                    }, {}, {
-                        method: 'get'
-                    });
-                });
-            }
-            function showInfo(user) {
-                WB2.anyWhere(function (W) {
-                    W.parseCMD("/users/show.json", function (sResult, bStatus) {
-                        if (!!bStatus) {
-                            var user_id = sResult.id;
-                            var user_name = sResult.screen_name;
-                            var user_location = sResult.location;
-                            var profile_image_url = sResult.profile_image_url;
+					callSwf(user_id, user_name, user_location, profile_image_url);
+				}
+			}, {
+				uid : user.uid
+			}, {
+				method : 'get'
+			});
+		});
+	}
+	function getSWF(movieName) {
+		if (navigator.appName.indexOf("Microsoft") != -1) {
+			return window[movieName];
+		} else {
+			return document[movieName];
+		}
+	}
 
-                            callSwf(user_id, user_name, user_location, profile_image_url);
-                        }
-                    }, { uid: user.uid }, {
-                        method: 'get'
-                    });
-                });
-            }
-            function getSWF(movieName) {
-                if (navigator.appName.indexOf("Microsoft") != -1) {
-                    return window[movieName];
-                }
-                else {
-                    return document[movieName];
-                }
-            }
+	function logout() {
+		WB2.logout(function() {
+		});
 
-            function logout() {
-                WB2.logout(function () { });
+	}
 
-            }
+	var isCommunicatorReady = false;
+	var isWebReady = false;
+	function onPageLoad() {
+		isWebReady = true;
 
-
-            var isCommunicatorReady = false;
-            var isWebReady = false;
-            function onPageLoad() {
-                isWebReady = true;
-
-            }
-            function isReady() { return isWebReady; }
-            function setSWFIsReady() { isCommunicatorReady = true; }
-        </script>
+	}
+	function isReady() {
+		return isWebReady;
+	}
+	function setSWFIsReady() {
+		isCommunicatorReady = true;
+	}
+</script>
 </head>
 
 <body onload="javascript:onPageLoad();">
-<div class="top_nav">
-    <div class="top_nav_content">
-    
-        <div class="div_top_left">
-        
-            <div class="div_left_nav"><a class="left_nav" href="mgtd_ch.html">主页</a></div>
-            <div class="div_left_nav"><a class="left_nav" href="#">寻宝图</a></div>
-            <div class="div_left_nav"><a class="left_nav" href="#">品牌荟萃</a></div>
-            <div class="div_left_nav"><a class="left_nav" href="#">食尚汇</a></div>
-            <div class="div_left_nav"><a class="left_nav" href="#">最新活动</a></div>
-            <div class="div_left_nav"><a class="left_nav" href="#">米格玩乐</a></div>
-            <div class="div_left_nav"><a class="left_nav" href="#">vip俱乐部</a></div>
-            <div class="clear"></div>
-        
-        </div>
-        <div class="div_top_right">
-        
-            <div class="div_right_nav_welcome">欢迎来到米格天地</div>
-            <div class="div_right_nav_search">
-                <div style="float:left;"><input type="text" class="input_search" value="搜索" /></div>
-                <div style="float:right; margin:4px 8px 0 0;"><img src="images/search.png" alt="搜索" /></div>
-                <div class="clear"></div>
-            </div>
-            <div style="float:right; margin:7px 6px 0 0;"><a class="right_nav" href="mgtd_ch.html">中文</a></div>
-            <div style="float:right; margin:4px 6px 0 0;"><img src="images/line.png" /></div>
-            <div style="float:right; margin:7px 6px 0 0;"><a class="right_nav" href="mgtd_en.html">EN</a></div>
-            <div class="clear"></div>
-        
-        </div>
-        <div class="clear"></div>
-    </div>
-</div>
-<div id="flashContent">
-	
-</div>
-<div class="div_bottom">Tel : 86-21-5551234&nbsp;&nbsp;&nbsp;&nbsp;Email : contact@megamills.com<br />Copyright © 2008-2012   Rights Reserved.
-</div>
+	<div class="top_nav">
+		<div class="top_nav_content">
+
+			<div class="div_top_left">
+
+				<div class="div_left_nav">
+					<a class="left_nav" href="mgtd_ch.html">主页</a>
+				</div>
+				<div class="div_left_nav">
+					<a class="left_nav" href="#">寻宝图</a>
+				</div>
+				<div class="div_left_nav">
+					<a class="left_nav" href="#">品牌荟萃</a>
+				</div>
+				<div class="div_left_nav">
+					<a class="left_nav" href="#">食尚汇</a>
+				</div>
+				<div class="div_left_nav">
+					<a class="left_nav" href="#">最新活动</a>
+				</div>
+				<div class="div_left_nav">
+					<a class="left_nav" href="#">米格玩乐</a>
+				</div>
+				<div class="div_left_nav">
+					<a class="left_nav" href="#">vip俱乐部</a>
+				</div>
+				<div class="clear"></div>
+
+			</div>
+			<div class="div_top_right">
+
+				<div class="div_right_nav_welcome">欢迎来到米格天地</div>
+				<div class="div_right_nav_search">
+					<div style="float: left;">
+						<input type="text" class="input_search" value="搜索" />
+					</div>
+					<div style="float: right; margin: 4px 8px 0 0;">
+						<img src="images/search.png" alt="搜索" />
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div style="float: right; margin: 7px 6px 0 0;">
+					<a class="right_nav" href="mgtd_ch.html">中文</a>
+				</div>
+				<div style="float: right; margin: 4px 6px 0 0;">
+					<img src="images/line.png" />
+				</div>
+				<div style="float: right; margin: 7px 6px 0 0;">
+					<a class="right_nav" href="mgtd_en.html">EN</a>
+				</div>
+				<div class="clear"></div>
+
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div id="flashContent"></div>
+	<div class="div_bottom">
+		Tel : 86-21-5551234&nbsp;&nbsp;&nbsp;&nbsp;Email : contact@megamills.com<br />Copyright
+		© 2008-2012 Rights Reserved.
+	</div>
 </body>
 </html>
