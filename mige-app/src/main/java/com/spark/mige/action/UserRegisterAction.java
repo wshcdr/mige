@@ -27,18 +27,18 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 	/*
 	 * perfect info
 	 */
-	private Long					user_id;
+	private Long					userId;
 	private String					name;
 	private String					sex;
-	private String					cb1;
-	private String					cb2;
-	private String					pos;
+	private String					country;
+	private String					city;
+	private String					postCode;
 	private String					birthday;
-	private String					tel;
+	private String					telephone;
 	private String					address;
 	private String					mail;
 	private String					transportation;
-	private String					fervourate;
+	private String					favorite;
 	private String					verification;
 	private org.w3c.dom.Document	perfectUserXmlDom;
 
@@ -67,7 +67,7 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 	 * @throws Exception
 	 */
 	public String perfectInfo() throws Exception {
-		User user = getUserService().getUserById(user_id);
+		User user = getUserService().getUserById(userId);
 		if (user == null) {
 			perfectUserXmlDom = createFailDocumnet();
 			return SUCCESS;
@@ -90,17 +90,17 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 	private void fillUserInfo(User user) throws ParseException {
 		user.setName(name);
 		user.setSex(convertSex(sex));
-		user.setCountry(cb1);
-		user.setCity(cb2);
-		user.setPostCode(pos);
-		user.setTelephone(tel);
+		user.setCountry(country);
+		user.setCity(city);
+		user.setPostCode(postCode);
+		user.setTelephone(telephone);
 		user.setAddress(address);
 		user.setEmail(mail);
 		if (StringUtils.isNotEmpty(birthday)) {
 			user.setBirthday(AppUtils.parseDate(birthday, "yyyy-MM-dd"));
 		}
 		user.setTransportation(transportation);
-		user.setFavorite(fervourate);
+		user.setFavorite(favorite);
 	}
 
 	private org.w3c.dom.Document convert2Document(User user) throws Exception {
@@ -108,7 +108,7 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 		Element root = doc.getRootElement();
 		root.addElement("status").addText("success");
 		if (!user.getIsComplete()) {
-			root.addElement("user_id").addText(user.getId().toString());
+			root.addElement("userId").addText(user.getId().toString());
 		}
 		Element inf = root.addElement("inf");
 		getUserService().addUserInfo(inf, user);
@@ -164,11 +164,11 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 	}
 
 	public Long getUser_id() {
-		return user_id;
+		return userId;
 	}
 
 	public void setUser_id(Long user_id) {
-		this.user_id = user_id;
+		this.userId = user_id;
 	}
 
 	public String getName() {
@@ -188,27 +188,27 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 	}
 
 	public String getCb1() {
-		return cb1;
+		return country;
 	}
 
 	public void setCb1(String cb1) {
-		this.cb1 = cb1;
+		this.country = cb1;
 	}
 
 	public String getCb2() {
-		return cb2;
+		return city;
 	}
 
 	public void setCb2(String cb2) {
-		this.cb2 = cb2;
+		this.city = cb2;
 	}
 
 	public String getPos() {
-		return pos;
+		return postCode;
 	}
 
 	public void setPos(String pos) {
-		this.pos = pos;
+		this.postCode = pos;
 	}
 
 	public String getBirthday() {
@@ -220,11 +220,11 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 	}
 
 	public String getTel() {
-		return tel;
+		return telephone;
 	}
 
 	public void setTel(String tel) {
-		this.tel = tel;
+		this.telephone = tel;
 	}
 
 	public String getAddress() {
@@ -252,11 +252,11 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 	}
 
 	public String getFervourate() {
-		return fervourate;
+		return favorite;
 	}
 
 	public void setFervourate(String fervourate) {
-		this.fervourate = fervourate;
+		this.favorite = fervourate;
 	}
 
 	public String getVerification() {
