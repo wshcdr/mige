@@ -6,17 +6,29 @@
 <struts>
 	<constant name="struts.action.extension" value="do" />
 	<constant name="struts.devMode" value="false" />
-	<constant name="struts.i18n.encoding" value="UTF-8"/>
+	<constant name="struts.i18n.encoding" value="UTF-8" />
 	<constant name="struts.ognl.allowStaticMethodAccess" value="true" />
-	
+
 	<package name="default" namespace="/" extends="json-default">
 		<result-types>
-			<result-type name="xslt" class="org.apache.struts2.views.xslt.XSLTResult">
+			<result-type name="xslt"
+				class="org.apache.struts2.views.xslt.XSLTResult">
 				<param name="location">/WEB-INF/template.xsl</param>
 			</result-type>
 		</result-types>
+
+		<interceptors>
+			<interceptor-stack name="default-stack">
+				<interceptor-ref name="defaultStack">
+					<param name="exception.logEnabled">true</param>
+					<param name="exception.logLevel">error</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name= "default-stack" />
+
 	</package>
-	
-	<include file="struts/struts-mige.xml"/>
-	<include file="struts/struts-mige-admin.xml"/>
+
+	<include file="struts/struts-mige.xml" />
+	<include file="struts/struts-mige-admin.xml" />
 </struts>
