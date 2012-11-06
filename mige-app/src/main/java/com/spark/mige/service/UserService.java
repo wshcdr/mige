@@ -10,6 +10,13 @@ import com.spark.mige.domain.entity.User;
 public interface UserService extends GenericService {
 
 	/**
+	 * check if user already exist
+	 * @param lname
+	 * @return
+	 */
+	boolean isUserExist(String lname);
+	
+	/**
 	 * get user by id
 	 * 
 	 * @param id

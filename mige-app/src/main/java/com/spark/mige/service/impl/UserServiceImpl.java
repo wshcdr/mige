@@ -23,6 +23,11 @@ public class UserServiceImpl extends GenericServiceImpl implements UserService {
 	}
 
 	@Override
+	public boolean isUserExist(String lname) {
+		return userDao.isExist(lname);
+	}
+	
+	@Override
 	public User getUserById(Long id) {
 		return userDao.getEntity(User.class, id);
 	}
