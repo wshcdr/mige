@@ -24,12 +24,12 @@ public class UserAction extends WebActionSupport implements Preparable {
 	 * @throws Exception
 	 */
 	public String login() throws Exception {
-		User u = getUserService().getUserByLoginName(loginName);
-		if (u == null) {
+		User user = getUserService().getUserByLoginName(loginName);
+		if (user == null) {
 			loginFeedback = createFailDocumnet();
 		} else {
-			session.put(USER_SESSION_NAME, loginName); // put loginName to session
-			loginFeedback = generateFeedback(u);
+			session.put(USER_SESSION_NAME, user); // put loginName to session
+			loginFeedback = generateFeedback(user);
 		}
 		return SUCCESS;
 	}
@@ -40,11 +40,11 @@ public class UserAction extends WebActionSupport implements Preparable {
 	 * @throws Exception
 	 */
 	public String checkLogin() throws Exception {
-		User u = (User) session.get(USER_SESSION_NAME);
-		if (u == null) {
+		User user = (User) session.get(USER_SESSION_NAME);
+		if (user == null) {
 			loginFeedback = createFailDocumnet();
 		} else {
-			loginFeedback = generateFeedback(u);
+			loginFeedback = generateFeedback(user);
 		}
 		return SUCCESS;
 	}
