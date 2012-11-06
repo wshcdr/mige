@@ -54,9 +54,13 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 	 * @throws Exception
 	 */
 	public String register() throws Exception {
-		User user = newUser();
-		getUserService().create(user);
-		registerUserXmlDom = convert2Document(user);
+		if (getUserService().isUserExist(account)) {
+			registerUserXmlDom = createFailDocumnet();
+		} else {
+			User user = newUser();
+			getUserService().create(user);
+			registerUserXmlDom = convert2Document(user);
+		}
 		return SUCCESS;
 	}
 
