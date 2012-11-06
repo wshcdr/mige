@@ -11,7 +11,7 @@ public class UserDao extends JpaDaoSupport {
 	
 	public boolean isExist(String lname) {
 		String qlString = "select count(u) from User u where u.loginName = :lname";
-		TypedQuery<Integer> query = getEntityManager().createQuery(qlString, Integer.class);
+		TypedQuery<Long> query = getEntityManager().createQuery(qlString, Long.class);
 		query.setParameter("lname", lname);
 		return query.getSingleResult() > 0;
 	}

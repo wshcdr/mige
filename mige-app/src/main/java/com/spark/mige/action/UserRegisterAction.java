@@ -55,7 +55,7 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 	 */
 	public String register() throws Exception {
 		if (getUserService().isUserExist(account)) {
-			registerUserXmlDom = createFailDocumnet();
+			registerUserXmlDom = createRegisterFailDocument();
 		} else {
 			User user = newUser();
 			getUserService().create(user);
@@ -74,12 +74,12 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 		User user = getUserService().getUserById(userId);
 		if (user == null) {
 			perfectUserXmlDom = createFailDocumnet();
-			return SUCCESS;
+		} else {
+			fillUserInfo(user);
+			user.setIsComplete(true);
+			getUserService().merge(user);
+			perfectUserXmlDom = convert2Document(user);
 		}
-		fillUserInfo(user);
-		user.setIsComplete(true);
-		getUserService().merge(user);
-		perfectUserXmlDom = convert2Document(user);
 		return SUCCESS;
 	}
 
@@ -126,6 +126,14 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 		return DomUtils.convert2DOMDocument(doc);
 	}
 
+	private org.w3c.dom.Document createRegisterFailDocument() throws Exception {
+		Document doc = createDocument();
+		Element root = doc.getRootElement();
+		root.addElement("status").addText("fail");
+		root.addElement("inf").addText("\u7528\u6237\u540D\u91CD\u590D");
+		return DomUtils.convert2DOMDocument(doc);
+	}
+	
 	private Document createDocument() {
 		Document doc = DocumentFactory.getInstance().createDocument();
 		doc.addElement("msg");

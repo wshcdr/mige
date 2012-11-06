@@ -16,11 +16,11 @@
 </script>
 </head>
 <body>
-	<form name="register" action="register_user.do" method="post">
+	<form name="register" action="regiter_user.do" method="post">
 		<table>
 			<tr>
 				<td>用戶名:</td>
-				<td><input type="text" name="loginName" id="login_name"><span>(不要输入中文)</span></td>
+				<td><input type="text" name="account" id="login_name"><span>(不要输入中文)</span></td>
 			</tr>
 			<tr>
 				<td colspan="21">
