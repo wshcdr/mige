@@ -12,9 +12,9 @@ import com.spark.mige.util.DomUtils;
 
 public class UserAction extends WebActionSupport implements Preparable {
 	private static final long		serialVersionUID	= 1L;
-	private final static String		USER_SESSION_NAME	= "user";
+	private final static String		USER_SESSION_NAME	= "loginName";
 
-	private String					user;
+	private String					loginName;
 	private org.w3c.dom.Document	loginFeedback;
 
 	/**
@@ -24,18 +24,18 @@ public class UserAction extends WebActionSupport implements Preparable {
 	 * @throws Exception
 	 */
 	public String login() throws Exception {
-		User u = getUserService().getUserByLoginName(user);
+		User u = getUserService().getUserByLoginName(loginName);
 		if (u == null) {
 			loginFeedback = createFailDocumnet();
 		} else {
-			session.put(USER_SESSION_NAME, user); // put user to session
+			session.put(USER_SESSION_NAME, loginName); // put loginName to session
 			loginFeedback = generateFeedback(u);
 		}
 		return SUCCESS;
 	}
 
 	/**
-	 * check if user has logined
+	 * check if loginName has logined
 	 * @return
 	 * @throws Exception
 	 */
@@ -97,10 +97,10 @@ public class UserAction extends WebActionSupport implements Preparable {
 	}
 
 	public String getUser() {
-		return user;
+		return loginName;
 	}
 
 	public void setUser(String user) {
-		this.user = user;
+		this.loginName = user;
 	}
 }
