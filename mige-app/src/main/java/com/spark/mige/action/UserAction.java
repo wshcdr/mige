@@ -12,7 +12,7 @@ import com.spark.mige.util.DomUtils;
 
 public class UserAction extends WebActionSupport implements Preparable {
 	private static final long		serialVersionUID	= 1L;
-	private final static String		USER_SESSION_NAME	= "loginName";
+	private final static String		USER_SESSION_NAME	= "user";
 
 	private String					loginName;
 	private org.w3c.dom.Document	loginFeedback;
