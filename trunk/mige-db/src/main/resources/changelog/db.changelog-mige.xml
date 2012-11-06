@@ -28,4 +28,10 @@
 		</createTable>
 	</changeSet>
 
+	<changeSet id="2" author="sean.gu">
+		<comment>add user type column</comment>
+		<addColumn tableName="user">
+			<column name="user_type" type="int(1)" defaultValue="0"/>
+		</addColumn>
+	</changeSet>
 </databaseChangeLog>

@@ -28,5 +28,11 @@
 				<param name="exposedValue">loginFeedback</param>
 			</result>
 		</action>
+		
+		<action name="sina_login" class="com.spark.mige.action.UserAction" method="sinaUserLogin">
+			<result name="success" type="xslt">
+				<param name="exposedValue">loginFeedback</param>
+			</result>
+		</action>
 	</package>
 </struts>

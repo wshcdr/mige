@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.spark.mige.domain.model.UserSex;
+import com.spark.mige.domain.model.UserType;
 
 @Entity
 @Table(name = "user")
@@ -65,6 +66,10 @@ public class User implements Serializable {
 
 	@Column(name = "is_complete")
 	private Boolean				isComplete;
+	
+	@Column(name = "user_type")
+	@Enumerated(EnumType.ORDINAL)
+	private UserType			userType;
 
 	public Long getId() {
 		return id;
@@ -73,7 +78,7 @@ public class User implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public String getLoginName() {
 		return loginName;
 	}
@@ -184,5 +189,13 @@ public class User implements Serializable {
 
 	public void setIsComplete(Boolean isComplete) {
 		this.isComplete = isComplete;
+	}
+
+	public UserType getUserType() {
+		return userType;
+	}
+
+	public void setUserType(UserType userType) {
+		this.userType = userType;
 	}
 }
