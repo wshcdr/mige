@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>米格广场</title>
 <link href="css/global.css" rel="stylesheet" type="text/css" />
-<script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=719513776"
+<script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2504309974"
 	type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="./js/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" src="./js/swfobject.js"></script>
@@ -68,7 +68,25 @@
 					var user_name = sResult.screen_name;
 					var user_location = sResult.location;
 					var profile_image_url = sResult.profile_image_url;
-
+					
+					var isComplete = false;
+					var isBinding = false;
+					$.ajax({
+						url : 'check_sina_account.do',
+						data : {user_name : user_name, user_id : user_id},
+						type : "POST",
+						cache : false,
+						async : false,	//async call
+						dataType : "xml",
+						success : function(data) {
+							isComplete = ('true' == $(data).find('user_inf').text());
+							isBinding = ('true' == $(data).find('bind_status').text());
+						},
+						error : function() {
+							alert('fail to call sina login action');
+						},
+					});
+					
 					callSwf(user_id, user_name, user_location, profile_image_url);
 				}
 			}, {
@@ -89,7 +107,6 @@
 	function logout() {
 		WB2.logout(function() {
 		});
-
 	}
 
 	var isCommunicatorReady = false;

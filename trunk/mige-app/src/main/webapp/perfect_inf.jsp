@@ -12,7 +12,7 @@
 </head>
 <body>
 	<form name="perfectInfoForm" action="perfect_inf.do" method="post">
-		<input type="hidden" name="userId" value="${param.userId}">
+		<input type="hidden" name="user_id" value="${param.userId}">
 		<table>
 			<tr>
 				<td>姓名:</td>
@@ -37,7 +37,7 @@
 			</tr>
 			<tr>
 				<td>邮编:</td>
-				<td><input type="text" name="postCode"></td>
+				<td><input type="text" name="pos"></td>
 			</tr>
 			<tr>
 				<td>地址:</td>
@@ -45,7 +45,7 @@
 			</tr>
 			<tr>
 				<td>电话:</td>
-				<td><input type="text" name="telephone"></td>
+				<td><input type="text" name="tel"></td>
 			</tr>
 			<tr>
 				<td>生日:</td>
@@ -64,7 +64,7 @@
 			</tr>
 			<tr>
 				<td>品牌:</td>
-				<td><input type="text" name="favorite"></td>
+				<td><input type="text" name="fervourate"></td>
 			</tr>
 			<tr>
 				<td>验证码:</td>

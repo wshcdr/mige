@@ -46,4 +46,11 @@ public interface UserService extends GenericService {
 	 * @return
 	 */
 	List<User> getAllUser();
+	
+	/**
+	 * bind 2 users
+	 * @param u1
+	 * @param u2
+	 */
+	void bindUser(User u1, User u2);
 }

@@ -17,21 +17,33 @@
 			</result>
 		</action>
 		
-		<action name="login" class="com.spark.mige.action.UserAction" method="login">
+		<action name="login" class="com.spark.mige.action.UserLoginAction" method="login">
 			<result name="success" type="xslt">
-				<param name="exposedValue">loginFeedback</param>
+				<param name="exposedValue">feedbackDOM</param>
 			</result>
 		</action>
 		
-		<action name="check_login" class="com.spark.mige.action.UserAction" method="checkLogin">
+		<action name="check_login" class="com.spark.mige.action.UserLoginAction" method="checkLogin">
 			<result name="success" type="xslt">
-				<param name="exposedValue">loginFeedback</param>
+				<param name="exposedValue">feedbackDOM</param>
 			</result>
 		</action>
 		
-		<action name="sina_login" class="com.spark.mige.action.UserAction" method="sinaUserLogin">
+		<action name="check_sina_account" class="com.spark.mige.action.UserLoginAction" method="checkSinaAccount">
 			<result name="success" type="xslt">
-				<param name="exposedValue">loginFeedback</param>
+				<param name="exposedValue">feedbackDOM</param>
+			</result>
+		</action>
+		
+		<action name="sina_login" class="com.spark.mige.action.UserLoginAction" method="sinaLogin">
+			<result name="success" type="xslt">
+				<param name="exposedValue">feedbackDOM</param>
+			</result>
+		</action>
+		
+		<action name="sina_user_binding" class="com.spark.mige.action.UserLoginAction" method="bindAccount">
+			<result name="success" type="xslt">
+				<param name="exposedValue">feedbackDOM</param>
 			</result>
 		</action>
 	</package>
