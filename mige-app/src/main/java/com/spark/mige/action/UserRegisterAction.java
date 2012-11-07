@@ -60,7 +60,7 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 		} else {
 			User user = newUser();
 			getUserService().create(user);
-			registerUserXmlDom = convert2Document(user);
+			registerUserXmlDom = createFeedbackDOM(user);
 		}
 		return SUCCESS;
 	}
@@ -79,7 +79,7 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 			fillUserInfo(user);
 			user.setIsComplete(true);
 			getUserService().merge(user);
-			perfectUserXmlDom = convert2Document(user);
+			perfectUserXmlDom = createFeedbackDOM(user);
 		}
 		return SUCCESS;
 	}
@@ -109,13 +109,13 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 		user.setFavorite(favorite);
 	}
 
-	private org.w3c.dom.Document convert2Document(User user) throws Exception {
+	private org.w3c.dom.Document createFeedbackDOM(User user) throws Exception {
 		Document doc = createDocument();
 		Element root = doc.getRootElement();
 		root.addElement("status").addText("success");
-		if (!user.getIsComplete()) {
-			root.addElement("userId").addText(user.getId().toString());
-		}
+		root.addElement("userId").addText(user.getId().toString());
+		root.addElement("user_id").addText(user.getId().toString());
+		root.addElement("user_inf").addText(user.getIsComplete().toString());
 		Element inf = root.addElement("inf");
 		getUserService().addUserInfo(inf, user);
 		return DomUtils.convert2DOMDocument(doc);
