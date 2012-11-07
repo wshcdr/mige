@@ -12,15 +12,15 @@ import com.spark.mige.domain.model.UserType;
 import com.spark.mige.service.UserService;
 import com.spark.mige.util.DomUtils;
 
-public class UserAction extends WebActionSupport implements Preparable {
+public class UserLoginAction extends WebActionSupport implements Preparable {
 	private static final long		serialVersionUID	= 1L;
 	private final static String		USER_SESSION_NAME	= "user";
 
 	private String					loginName;
-	private org.w3c.dom.Document	loginFeedback;
-
 	private String					sinaUserId;
 	private String					sinaUserName;
+
+	private org.w3c.dom.Document	feedbackDOM;
 
 	/**
 	 * login
@@ -31,10 +31,10 @@ public class UserAction extends WebActionSupport implements Preparable {
 	public String login() throws Exception {
 		User user = getUserService().getUserByLoginName(loginName);
 		if (user == null) {
-			loginFeedback = createFailDocumnet();
+			feedbackDOM = createFailDocumnet();
 		} else {
 			session.put(USER_SESSION_NAME, user); // put user to session
-			loginFeedback = generateFeedback(user);
+			feedbackDOM = createUserInfoDOM(user);
 		}
 		return SUCCESS;
 	}
@@ -48,26 +48,53 @@ public class UserAction extends WebActionSupport implements Preparable {
 	public String checkLogin() throws Exception {
 		User user = (User) session.get(USER_SESSION_NAME);
 		if (user == null) {
-			loginFeedback = createFailDocumnet();
+			feedbackDOM = createFailDocumnet();
 		} else {
-			loginFeedback = generateFeedback(user);
+			feedbackDOM = createUserInfoDOM(user);
 		}
 		return SUCCESS;
 	}
 
+	/**
+	 * check sina account
+	 * @return
+	 * @throws Exception
+	 */
+	public String checkSinaAccount() throws Exception {
+		User user = getUserService().getUserByLoginName(sinaUserId);
+		feedbackDOM = createSinaAccountCheckDOM(user);
+		return SUCCESS;
+	}
+	
 	/**
 	 * sina user login
 	 * 
 	 * @return
 	 * @throws Exception
 	 */
-	public String sinaUserLogin() throws Exception {
+	public String sinaLogin() throws Exception {
 		User user = getUserService().getUserByLoginName(sinaUserId);
 		if (user == null) {
 			user = createSinaUser();
 		}
-		session.put(USER_SESSION_NAME, user);
-		loginFeedback = generateFeedback(user);
+		feedbackDOM = createUserInfoDOM(user);
+		return SUCCESS;
+	}
+	
+	/**
+	 * bind user
+	 * @return
+	 * @throws Exception 
+	 */
+	public String bindAccount() throws Exception {
+		User sinaUser =  getUserService().getUserByLoginName(sinaUserId);
+		User migeUser = getUserService().getUserByLoginName(loginName);
+		if (sinaUser == null || migeUser == null) {
+			feedbackDOM = createFailDocumnet();
+		} else {
+			getUserService().bindUser(sinaUser, migeUser);
+			feedbackDOM = createUserInfoDOM(sinaUser);
+		}
 		return SUCCESS;
 	}
 
@@ -77,7 +104,7 @@ public class UserAction extends WebActionSupport implements Preparable {
 		user.setName(sinaUserName);
 		user.setUserType(UserType.sina);
 		user.setCreateTime(AppUtils.currentTime());
-		user.setIsComplete(true);
+		user.setIsComplete(false);
 		getUserService().create(user);
 		return user;
 	}
@@ -87,12 +114,13 @@ public class UserAction extends WebActionSupport implements Preparable {
 		setResponseEncoding();
 	}
 
-	private org.w3c.dom.Document generateFeedback(User user) throws Exception {
+	private org.w3c.dom.Document createUserInfoDOM(User user) throws Exception {
 		Document doc = createDocument();
 		Element root = doc.getRootElement();
 		root.addElement("status").addText("success");
 		root.addElement("user_id").addText(user.getId().toString());
 		root.addElement("user_inf").addText(user.getIsComplete().toString());
+		root.addElement("bind_status").addText(String.valueOf(user.getBindUser() != null));
 		Element inf = root.addElement("inf");
 		getUserService().addUserInfo(inf, user);
 
@@ -106,6 +134,21 @@ public class UserAction extends WebActionSupport implements Preparable {
 		return DomUtils.convert2DOMDocument(doc);
 	}
 
+	private org.w3c.dom.Document createSinaAccountCheckDOM(User user) throws Exception {
+		Document doc = createDocument();
+		Element root = doc.getRootElement();
+		root.addElement("status").addText("success");
+		if (user != null) {
+			root.addElement("user_id").addText(user.getId().toString());
+			root.addElement("user_inf").addText(user.getIsComplete().toString());
+			root.addElement("bind_status").addText(String.valueOf(user.getBindUser() != null));
+		} else {
+			root.addElement("user_inf").addText("false");
+			root.addElement("bind_status").addText("false");
+		}
+		return DomUtils.convert2DOMDocument(doc);
+	}
+	
 	private Document createDocument() {
 		Document doc = DocumentFactory.getInstance().createDocument();
 		doc.addElement("msg");
@@ -121,12 +164,12 @@ public class UserAction extends WebActionSupport implements Preparable {
 		response.setHeader("Cache-Control", "no-cache");
 	}
 
-	public org.w3c.dom.Document getLoginFeedback() {
-		return loginFeedback;
+	public org.w3c.dom.Document getFeedbackDOM() {
+		return feedbackDOM;
 	}
 
-	public void setLoginFeedback(org.w3c.dom.Document loginFeedback) {
-		this.loginFeedback = loginFeedback;
+	public void setFeedbackDOM(org.w3c.dom.Document feedbackDOM) {
+		this.feedbackDOM = feedbackDOM;
 	}
 
 	public String getUser() {

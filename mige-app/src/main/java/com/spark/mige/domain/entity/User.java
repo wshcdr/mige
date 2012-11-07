@@ -66,10 +66,13 @@ public class User implements Serializable {
 
 	@Column(name = "is_complete")
 	private Boolean				isComplete;
-	
+
 	@Column(name = "user_type")
 	@Enumerated(EnumType.ORDINAL)
 	private UserType			userType;
+
+	@Column(name = "bind_user")
+	private Long				bindUser;
 
 	public Long getId() {
 		return id;
@@ -197,5 +200,13 @@ public class User implements Serializable {
 
 	public void setUserType(UserType userType) {
 		this.userType = userType;
+	}
+
+	public Long getBindUser() {
+		return bindUser;
+	}
+
+	public void setBindUser(Long bindUser) {
+		this.bindUser = bindUser;
 	}
 }

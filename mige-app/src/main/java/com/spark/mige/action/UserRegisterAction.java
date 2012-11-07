@@ -12,6 +12,7 @@ import com.spark.core.action.WebActionSupport;
 import com.spark.core.util.AppUtils;
 import com.spark.mige.domain.entity.User;
 import com.spark.mige.domain.model.UserSex;
+import com.spark.mige.domain.model.UserType;
 import com.spark.mige.service.UserService;
 import com.spark.mige.util.DomUtils;
 
@@ -87,6 +88,7 @@ public class UserRegisterAction extends WebActionSupport implements Preparable {
 		User user = new User();
 		user.setLoginName(account);
 		user.setIsComplete(false);
+		user.setUserType(UserType.mige);
 		user.setCreateTime(AppUtils.currentTime());
 		return user;
 	}

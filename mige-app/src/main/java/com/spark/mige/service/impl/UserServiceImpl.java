@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.spark.core.service.GenericServiceImpl;
 import com.spark.core.util.AppUtils;
@@ -65,5 +66,14 @@ public class UserServiceImpl extends GenericServiceImpl implements UserService {
 		if (!StringUtils.isEmpty(val)) {
 			e.addElement(name).addText(val);
 		}
+	}
+
+	@Override
+	@Transactional
+	public void bindUser(User u1, User u2) {
+		u1.setBindUser(u2.getId());
+		u2.setBindUser(u1.getId());
+		userDao.merge(u1);
+		userDao.merge(u2);
 	}
 }

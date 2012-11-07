@@ -34,4 +34,11 @@
 			<column name="user_type" type="int(1)" defaultValue="0"/>
 		</addColumn>
 	</changeSet>
+	
+	<changeSet id="3" author="sean.gu">
+		<comment>add bind_user column to user</comment>
+		<addColumn tableName="user">
+			<column name="bind_user" type="int(10)"/>
+		</addColumn>
+	</changeSet>
 </databaseChangeLog>
